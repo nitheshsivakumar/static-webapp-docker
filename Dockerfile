@@ -3,27 +3,26 @@ FROM amazonlinux:latest
 # Install dependencies
 RUN yum update -y && \
     yum install -y httpd && \
-    yum search wget && \
     yum install wget -y && \
     yum install unzip -y
 
-# change directory
-RUN cd /var/www/html
+# change directory to where the website should be
+WORKDIR /var/www/html
 
-# download webfiles
+# Download web files from GitHub
 RUN wget https://github.com/nitheshsivakumar/jupiter-website/archive/refs/heads/main.zip
 
-# unzip folder
+# Unzip the downloaded file
 RUN unzip main.zip
 
-# copy files into html directory
+# Copy files into the HTML directory (for Apache to serve)
 RUN cp -r jupiter-website-main/* /var/www/html/
 
-# remove unwanted folder
+# Remove unwanted folder and zip file
 RUN rm -rf jupiter-website-main main.zip
 
-# exposes port 80 on the container
+# expose port 80 for the web server
 EXPOSE 80
 
-# set the default application that will start when the container start
+# set the default application that will start when the container starts
 ENTRYPOINT ["/usr/sbin/httpd", "-D", "FOREGROUND"]
