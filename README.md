@@ -75,15 +75,17 @@ This project leverages **Docker** for containerization, **ECR** for image storag
    git clone https://github.com/yourusername/static-webapp-aws.git
    cd static-webapp-aws
 2. Build and run the Docker container:
-docker build -t static-webapp .
-docker run -p 8080:80 static-webapp
+   ```sh
+   docker build -t static-webapp .
+   docker run -p 8080:80 static-webapp
 
-3. Push the image to AWS ECR:
-aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <your-ecr-url>
-docker tag static-webapp:latest <your-ecr-url>:latest
-docker push <your-ecr-url>:latest
+4. Push the image to AWS ECR:
+   ```sh
+   aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <your-ecr-url>
+   docker tag static-webapp:latest <your-ecr-url>:latest
+   docker push <your-ecr-url>:latest
 
-4. Deploy to ECS via AWS Fargate.
+5. Deploy to ECS via AWS Fargate.
 
 📊 Key Benefits
 
